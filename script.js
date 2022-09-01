@@ -11,7 +11,7 @@ var close = () => {
         a.style.display = 'none';
         h1.style.display = 'none';
         document.querySelectorAll('.game')[0].style.display = 'flex';
-        createTable(10);
+        createTable(getgird);
         GetTimer();
         TimeRemaining();
         setInterval(TimeRemaining, 1000);
@@ -19,11 +19,14 @@ var close = () => {
 }
 var lever = document.getElementById('getlever'),
     timer = document.getElementById('gettime'),
+    gird = document.querySelector('.grid'),
     leverValue,
-    timevalue;
+    timevalue,
+    getgird;
 var start = () => {
     leverValue = lever.value;
     timevalue = timer.value;
+    getgird = Number(gird.value);
 }
 
 // game
@@ -90,6 +93,7 @@ var NoTitle2 = () => {
         for (let j in Aarray) {
             if (Aarray[i][j] == mode) {
                 B[i][j] = 1;
+                break;
             }
         }
     }
@@ -118,6 +122,7 @@ var Win = (end, x, y) => {
     if (Aarray[x][y] == end) {
         document.getElementById('find').innerHTML = 'You win !';
         stop = true;
+        RetryBtn();
     }
 }
 
@@ -222,12 +227,11 @@ var FindRandom = (x, y) => {
 
     // Lượt tiếp theo
     let nextX, nextY;
-    console.log(A);
     inc++;
     for (i in B) {
-        nextX = Aarray[i].indexOf(A[inc]);
-        if (nextX > -1) {
-            nextY = i;
+        nextY = Aarray[i].indexOf(A[inc]);
+        if (nextY > -1) {
+            nextX = i;
             B[nextX][nextY] = true;
             break;
         }
@@ -273,4 +277,15 @@ var TimeRemaining = () => {
     Seconds = Check(Seconds);
     document.getElementById('countdown').innerHTML = 'Time remaining</br>' + Minutes + ':' + Seconds;
     Seconds--;
+}
+
+var RetryBtn = () => {
+    let btn = document.createElement('button');
+    btn.innerHTML = 'Retry';
+    btn.id = 'retry';
+    btn.onclick = function () { Reset() };
+    document.body.appendChild(btn);
+}
+var Reset = () => {
+    location.reload();
 }

@@ -169,6 +169,43 @@ th p {
 .copyright {
     font-size: 10px;
     position: absolute;
-    bottom: 1px;
+    bottom: 1vh;
     color: rgba(255, 255, 255, 0.4);
+}
+
+
+.grid {
+    position: absolute;
+    left: 0.5vh;
+    top: 0.5vh;
+    background: rgba(255, 255, 255, 0.2);
+    appearance: none;
+    outline: none;
+    text-align: center;
+    border: none;
+    border-radius: 0.5vh;
+    width: 8vh;
+    height: 2vh;
+    font-size: 1vh;
+    text-align: center;
+}
+.grid:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+.grid option {
+    color: black;
+}
+
+#retry {
+    padding: 1vh 5vh;
+    appearance: none;
+    outline: none;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 1vh;
+    position: absolute;
+    bottom: 18vh;
+}
+#retry:hover {
+    background: rgba(255, 255, 255, 0.5);
 }
