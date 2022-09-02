@@ -1,21 +1,19 @@
 // start
 document.querySelectorAll('.chooselever button')[0].onclick = function () { close() }
-const h1 = document.querySelector('h1');
+const title = document.querySelector('.title');
 var close = () => {
     document.querySelectorAll('.chooselever button')[0].disabled = true;
     start();
     const a = document.querySelectorAll('.chooselever')[0];
-    a.style.animation = `close 1s`;
-    h1.style.animation = 'closeh1 2s';
     setTimeout(function () {
         a.style.display = 'none';
-        h1.style.display = 'none';
+        title.style.display = 'none';
         document.querySelectorAll('.game')[0].style.display = 'flex';
         createTable(getgird);
         GetTimer();
         TimeRemaining();
         setInterval(TimeRemaining, 1000);
-    }, 1000)
+    }, 0)
 }
 var lever = document.getElementById('getlever'),
     timer = document.getElementById('gettime'),
@@ -84,6 +82,14 @@ var NoTitle1 = () => {
             mode = A[0];
             NoTitle2();
             break;
+
+        case '4':
+            mode = Math.floor(Math.random() * 8) + 2;
+            DivisibleNumber(mode);
+
+            document.getElementById('find').style.fontSize = '1.5vh' 
+            document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left'
+            break;
     }
 }
 
@@ -114,18 +120,26 @@ var NoTitle3 = (a, x, y) => {
         case '3':
             a.onclick = function () { FindRandom(x, y) }
             break;
+
+        case '4':
+            a.onclick = function () { Divisible(x, y) }
     }
 }
 
 // Chiến thắng
 var Win = (end, x, y) => {
     if (Aarray[x][y] == end) {
-        document.getElementById('find').innerHTML = 'You win !';
+        document.getElementById('find').innerHTML = 'YOU WIN !';
         stop = true;
         RetryBtn();
+        document.getElementById('home').remove();
     }
 }
 
+
+// B[x][y] == 1 là chọn đc
+// B[x][y] == 0 là không thể chọn
+// B[x][y] == 2 là đã chọn
 var MinToMax = (x, y) => {
     // Hết giờ
     if (timeUp) return false;
@@ -145,7 +159,7 @@ var MinToMax = (x, y) => {
     B[x][y] = 2;
     document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
     setTimeout(function () {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.background = 'rgb(124, 252, 0)';
+        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
     }, 500);
 
     // Định nghĩa số tiếp theo
@@ -183,7 +197,7 @@ var MaxToMin = (x, y) => {
     B[x][y] = 2;
     document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
     setTimeout(function () {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.background = 'rgb(124, 252, 0)';
+        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
     }, 500);
 
     // Lượt tiếp theo
@@ -222,7 +236,7 @@ var FindRandom = (x, y) => {
     B[x][y] = 2;
     document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
     setTimeout(function () {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.background = 'rgb(124, 252, 0)';
+        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
     }, 500);
 
     // Lượt tiếp theo
@@ -238,7 +252,8 @@ var FindRandom = (x, y) => {
     }
 
     if (inc > M * M - 1) {
-        document.getElementById('find').innerHTML = 'You win !';
+        RetryBtn();
+        document.getElementById('find').innerHTML = 'YOU WIN !';
         stop = true;
         return false;
     }
@@ -247,13 +262,66 @@ var FindRandom = (x, y) => {
     document.getElementById('find').innerHTML = 'Find number: ' + Aarray[nextX][nextY];
 }
 
+var DivisibleCount1 = 0; //Số phần tử thõa mãn điều kiện
+var DivisibleCount2 = 0; //Đếm phần tử
+var DivisibleCount3 = 0; //Bản sao DivisibleCount1
+var DivisibleNumber = (x) => {
+    for (i in Aarray) {
+        for (j in Aarray) {
+            if (Aarray[i][j] % x == 0) {
+                B[i][j] = 1;
+                DivisibleCount1++;
+            }
+        }
+    }
+    DivisibleCount3 = DivisibleCount1;
+}
+var Divisible = (x, y) => {
+    // Hết giờ
+    if (timeUp) return false;
+    // Không chọn lại
+    if (B[x][y] == 2) return false;
+
+    // Chọn sai
+    if (B[x][y] == 0) {
+        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
+        setTimeout(function () {
+            document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'none';
+        }, 500)
+        return false;
+    }
+
+    // Chọn đúng
+    B[x][y] = 2;
+    document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
+    setTimeout(function () {
+        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
+    }, 500);
+    DivisibleCount2++;
+    DivisibleCount3--;
+
+    // Kiểm tra số lượng phần tử
+    if (DivisibleCount2 == DivisibleCount1) {
+        document.getElementById('find').style.fontSize = '3vh';
+        document.getElementById('find').innerHTML = 'YOU WIN !';
+        stop = true;
+        RetryBtn();
+        return false;
+    }
+
+    //  In ra màn hình
+    document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left';
+}
+
+
+
 var Minutes, Seconds = 0;
 var timeUp = false;
 var stop = false;
 var GetTimer = () => {
     Minutes = Number(timevalue);
     // Minutes = 0;
-    // Seconds = 15;
+    // Seconds = 3;
 }
 var Check = (i) => {
     if (i < 10) i = '0' + i;
@@ -266,7 +334,13 @@ var TimeRemaining = () => {
     }
     if ((Minutes < 1) && (Seconds < 0)) {
         timeUp = true;
-        document.getElementById('countdown').innerHTML = `Time's up !`;
+        document.getElementById('find').innerHTML = 'YOU LOST !';
+
+        // Chỗ này đéo hiểu sao hàm Retrybtn bị lặp mặc dù clearInterval
+        // Dùng true false tạm thời chặn lại
+        RetryBtn();
+
+        document.getElementById('countdown').innerHTML = `TIME'S UP !`;
         clearInterval(TimeRemaining);
         return false;
     }
@@ -276,15 +350,21 @@ var TimeRemaining = () => {
     }
     Seconds = Check(Seconds);
     document.getElementById('countdown').innerHTML = 'Time remaining</br>' + Minutes + ':' + Seconds;
+    // console.log(Minutes + ':' + Seconds)
     Seconds--;
 }
 
+var temporary = true;
 var RetryBtn = () => {
-    let btn = document.createElement('button');
-    btn.innerHTML = 'Retry';
-    btn.id = 'retry';
-    btn.onclick = function () { Reset() };
-    document.body.appendChild(btn);
+    if (temporary) {
+        let btn = document.createElement('button');
+        btn.innerHTML = 'Retry';
+        btn.id = 'retry';
+        btn.onclick = function () { Reset() };
+        document.querySelector('.game').appendChild(btn);
+        document.getElementById('home').remove();
+        temporary = false;
+    }
 }
 var Reset = () => {
     location.reload();

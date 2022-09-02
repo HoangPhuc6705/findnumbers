@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    color: white;
+    color: black;
     font-family: 'Varela Round', sans-serif;
     overflow: hidden;
 }
@@ -13,19 +13,36 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(45deg, #FC466B, #3F5EFB);
+    flex-direction: column;
+    background: linear-gradient(-45deg, #56CCF2, #2F80ED);
+    /* background: url(https://media.istockphoto.com/vectors/number-background-vector-id451046873?k=20&m=451046873&s=612x612&w=0&h=8JJkRrFvN1Tu3k913C6I6J3kXglFxTMhu0guknte8gA=); */
+    background-size: cover;
+}
+.main {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
 }
-h1 {
+.title {
+    padding: 2vh 5vh;
+    font-size: 3vh;
+    text-align: center;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 1vh;
+    text-transform: uppercase;
     letter-spacing: 5px;
-    position: absolute;
-    top: 15%;
+    margin-bottom: 50vh;
+    background: white;
 }
 .chooselever {
     position: absolute;
     width: 50vh;
     height: 30vh;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 1);
     border-radius: 1vh;
     padding: 10px;
     display: flex;
@@ -33,13 +50,16 @@ h1 {
     align-items: center;
     flex-direction: column;
     gap: 5vh;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 .chooselever button {
+    cursor: pointer;
     padding: 0.5vh 2vh;
-    background: rgba(255, 255, 255, 0.2);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    border: none;
+    background: white;
     outline: none;
     appearance: none;
-    border: none;
     border-radius: 1vh;
 }
 .chooselever button:hover , .chooselever form div select:hover  {
@@ -59,13 +79,15 @@ h1 {
     flex-direction: column;
 }
 .chooselever form div select {
-    width: 20vh;
+    cursor: pointer;
+    width: 25vh;
     height: 5vh;
-    background: rgba(255, 255, 255, 0.2);
-    appearance: none;
+    background: white;
+    border: 0.1vh solid black;
+    /* border: none; */
+    /* appearance: none; */
     outline: none;
     text-align: center;
-    border: none;
     border-radius: 1vh;
     font-size: 1.5vh;
 }
@@ -80,10 +102,6 @@ form p {
         opacity: 1;
         transform: scale(1);
     }
-    70% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
     100% {
         opacity: 0;
         transform: scale(0);
@@ -91,10 +109,10 @@ form p {
 }
 @keyframes closeh1 {
     0% {
-        transform: translateY(1vh);
+        opacity: 1;
     }
     100% {
-        transform: translateY(-50vh);
+        opacity: 0;
     }
 }
 
@@ -105,23 +123,27 @@ form p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 100vh;
+    gap: 2vh;
 }
 table {
-    background: rgba(255, 255, 255, 0.2);
+    background: white;
     border-radius: 0.5vh;
     padding: 0.5vh;
     border-spacing: 5px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 th {
+    appearance: none;
     cursor: pointer;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 0.5vh;
     font-weight: normal;
-    width: 2em;
-    height: 2em;
+    width: 2.2em;
+    height: 2.2em;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 th p {
     font-size: 1em;
@@ -139,10 +161,12 @@ th p {
 }
 @keyframes true {
     0% {
-        background: rgba(255, 255, 255, 0.2);
+        opacity: 1;
+        transform: scale(1);
     }
     100% {
-        background: rgb(124, 252, 0);
+        opacity: 0;
+        transform: scale(0);
     }
 }
 @keyframes error {
@@ -158,23 +182,56 @@ th p {
 }
 
 #find {
+    text-align: center;
+    background: white;
     font-size: 3vh;
+    width: 27vh;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5vh;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 #countdown {
-    width: 40vh;
+    background: white;
+    width: 35vh;
     height: 10vh;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 3vh;
+    padding: 1vh 2vh;
+    border-radius: 0.5vh;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
+#home {
+    cursor: pointer;
+    position: absolute;
+    top: 1vh;
+    right: 1vh;
+    padding: 1vh 2vh;
+    appearance: none;
+    outline: none;
+    border: none;
+    border-radius: 1vh;
+    background: white;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+
+
 .copyright {
     font-size: 10px;
     position: absolute;
-    bottom: 1vh;
-    color: rgba(255, 255, 255, 0.4);
+    top: 1vh;
+    color: white;
 }
 
 
 .grid {
+    cursor: pointer;
     position: absolute;
     left: 0.5vh;
     top: 0.5vh;
@@ -182,7 +239,7 @@ th p {
     appearance: none;
     outline: none;
     text-align: center;
-    border: none;
+    border: 0.2vh solid black;
     border-radius: 0.5vh;
     width: 8vh;
     height: 2vh;
@@ -197,15 +254,16 @@ th p {
 }
 
 #retry {
+    cursor: pointer;
     padding: 1vh 5vh;
     appearance: none;
     outline: none;
     border: none;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 1vh;
     position: absolute;
-    bottom: 18vh;
+    bottom: 10%;
+    border-radius: 1vh;
+    background: white;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
-#retry:hover {
-    background: rgba(255, 255, 255, 0.5);
-}
+
+/* background */
