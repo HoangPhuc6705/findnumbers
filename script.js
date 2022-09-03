@@ -113,8 +113,11 @@ var NoTitle1 = () => {
             mode = Math.floor(Math.random() * 8) + 2;
             DivisibleNumber(mode);
 
-            document.getElementById('find').style.fontSize = '1.5vh'
-            document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left'
+            wrongsClick = wrongsGrid[getgird - 3];
+            console.log(wrongsClick);
+
+            document.getElementById('find').style.fontSize = '1.2vh'
+            document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left</br>Wrong clicks: ' + wrongsClick;
             break;
     }
 }
@@ -304,6 +307,8 @@ var FindRandom = (x, y) => {
 var DivisibleCount1 = 0; //Số phần tử thõa mãn điều kiện
 var DivisibleCount2 = 0; //Đếm phần tử
 var DivisibleCount3 = 0; //Bản sao DivisibleCount1
+var wrongsClick = 0;
+var wrongsGrid = [1, 2, 2, 2, 3, 3, 4, 5];
 var DivisibleNumber = (x) => {
     for (i in Aarray) {
         for (j in Aarray) {
@@ -323,6 +328,18 @@ var Divisible = (x, y) => {
 
     // Chọn sai
     if (B[x][y] == 0) {
+        wrongsClick--;
+        if (wrongsClick == 0) {
+            document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
+            document.getElementById('find').style.fontSize = '3vh';
+            document.getElementById('find').innerHTML = 'YOU LOST !';
+            LockNumber();
+            stop = true;
+            RetryBtn();
+            return false;
+        }
+        document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left</br>Wrong clicks: ' + wrongsClick;
+
         document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
         setTimeout(function () {
             document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'none';
@@ -351,7 +368,7 @@ var Divisible = (x, y) => {
     }
 
     //  In ra màn hình
-    document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left';
+    document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left</br>Wrong clicks: ' + wrongsClick;
 }
 
 var LockNumber = () => {
