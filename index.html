@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Tìm chữ số</title>
+    <title>Find Numbers</title>
 </head>
 
 <body>
@@ -30,10 +30,13 @@
                 <div>
                     <p>Choose mode</p>
                     <select id="getlever">
-                        <option value="1">From min to max numbers</option>
-                        <option value="2">From max to min numbers</option>
+                        <option value="1">Min to Max</option>
+                        <option value="2">Max to Min</option>
                         <option value="3">Random numbers</option>
-                        <option value="4">Divisible numbers for an number</option>
+                        <option value="4">Divisible numbers</option>
+                        <option value="5" disabled>Min to Max (Harder)</option>
+                        <option value="4" disabled>Max to Min (Harder)</option>
+                        <option value="7" disabled>Time Keeper</option>
                     </select>
                 </div>
                 <div>
@@ -54,6 +57,7 @@
 
     <div class="game">
         <button type="button" id="home" onclick="location.reload()">Home</button>
+        <p id="mode-name"></p>
         <p id="find"></p>
         <table></table>
         <p id="countdown"></p>
@@ -61,6 +65,5 @@
     <p class="copyright">Copyright by Fmack - Hoang Phuc</p>
 </body>
 <script src="script.js"></script>
-<!-- <script src="background.js"></script> -->
 
 </html>

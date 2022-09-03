@@ -1,11 +1,35 @@
 // start
 document.querySelectorAll('.chooselever button')[0].onclick = function () { close() }
 const title = document.querySelector('.title');
+
+// Xử lí thông tin khi đang chọn
+document.getElementById('gettime').onclick = function () { Timeline() };
+var Timeline = () => {
+    let times = document.getElementById('gettime').value;
+    if (times == '1') {
+        let grid = document.querySelector('.grid').value;
+        if (Number(grid) >= 8) {
+            document.querySelector('.grid').options[2].selected = true;
+        }
+        for (let i = 5; i <= 7; i++) {
+            document.querySelector('.grid').options[i].disabled = true;
+        }
+        return true;
+    }
+    for (let i = 5; i <= 7; i++) {
+        document.querySelector('.grid').options[i].disabled = false;
+    }
+}
+
+// Tắt bảng chọn
 var close = () => {
     document.querySelectorAll('.chooselever button')[0].disabled = true;
     start();
     const a = document.querySelectorAll('.chooselever')[0];
+    // Lấy tên chế độ
+    var ModeName = document.getElementById('getlever');
     setTimeout(function () {
+        document.getElementById('mode-name').innerHTML = ModeName.options[ModeName.selectedIndex].text + ' ' + (Number(getgird)) + ' x ' + (Number(getgird)) + '</br>' + timevalue + ' minutes';
         a.style.display = 'none';
         title.style.display = 'none';
         document.querySelectorAll('.game')[0].style.display = 'flex';
@@ -21,6 +45,8 @@ var lever = document.getElementById('getlever'),
     leverValue,
     timevalue,
     getgird;
+
+// Lấy thông tin chế độ, thời gian, lưới
 var start = () => {
     leverValue = lever.value;
     timevalue = timer.value;
@@ -87,7 +113,7 @@ var NoTitle1 = () => {
             mode = Math.floor(Math.random() * 8) + 2;
             DivisibleNumber(mode);
 
-            document.getElementById('find').style.fontSize = '1.5vh' 
+            document.getElementById('find').style.fontSize = '1.5vh'
             document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left'
             break;
     }
@@ -129,11 +155,23 @@ var NoTitle3 = (a, x, y) => {
 // Chiến thắng
 var Win = (end, x, y) => {
     if (Aarray[x][y] == end) {
+        YourTimeBox(YourTime);
         document.getElementById('find').innerHTML = 'YOU WIN !';
         stop = true;
         RetryBtn();
-        document.getElementById('home').remove();
     }
+}
+
+// Your time box
+var YourTimeBox = (k) => {
+    let divMn = Math.floor(k / 60);
+    let modSc = k % 60;
+    modSc = Check(modSc);
+
+    const timebox = document.createElement('p');
+    timebox.id = 'your-time';
+    timebox.innerHTML = 'Your time: ' + divMn + ':' + modSc;
+    document.querySelector('.game').appendChild(timebox);
 }
 
 
@@ -166,7 +204,7 @@ var MinToMax = (x, y) => {
     for (i in Aarray) {
         for (j in Aarray) {
             if (Aarray[i][j] == Aarray[x][y] + 1) {
-                B[i][j] = true;
+                B[i][j] = 1;
             }
         }
     }
@@ -204,7 +242,7 @@ var MaxToMin = (x, y) => {
     for (i in Aarray) {
         for (j in Aarray) {
             if (Aarray[i][j] == Aarray[x][y] - 1) {
-                B[i][j] = true;
+                B[i][j] = 1;
             }
         }
     }
@@ -252,6 +290,7 @@ var FindRandom = (x, y) => {
     }
 
     if (inc > M * M - 1) {
+        YourTimeBox(YourTime);
         RetryBtn();
         document.getElementById('find').innerHTML = 'YOU WIN !';
         stop = true;
@@ -302,8 +341,10 @@ var Divisible = (x, y) => {
 
     // Kiểm tra số lượng phần tử
     if (DivisibleCount2 == DivisibleCount1) {
+        LockNumber();
         document.getElementById('find').style.fontSize = '3vh';
         document.getElementById('find').innerHTML = 'YOU WIN !';
+        YourTimeBox(YourTime);
         stop = true;
         RetryBtn();
         return false;
@@ -313,11 +354,19 @@ var Divisible = (x, y) => {
     document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left';
 }
 
+var LockNumber = () => {
+    for (i in B) {
+        for (j in B) {
+            B[i][j] = 2;
+        }
+    }
+}
 
 
 var Minutes, Seconds = 0;
 var timeUp = false;
 var stop = false;
+var YourTime = -1;
 var GetTimer = () => {
     Minutes = Number(timevalue);
     // Minutes = 0;
@@ -332,8 +381,10 @@ var TimeRemaining = () => {
         clearInterval(TimeRemaining);
         return false;
     }
-    if ((Minutes < 1) && (Seconds < 0)) {
+    if ((Minutes < 1) && (Seconds < 1)) {
+        LockNumber();
         timeUp = true;
+        document.getElementById('find').style.fontSize = '3vh'; //Dòng này cho chế độ divisible numbers
         document.getElementById('find').innerHTML = 'YOU LOST !';
 
         // Chỗ này đéo hiểu sao hàm Retrybtn bị lặp mặc dù clearInterval
@@ -352,6 +403,7 @@ var TimeRemaining = () => {
     document.getElementById('countdown').innerHTML = 'Time remaining</br>' + Minutes + ':' + Seconds;
     // console.log(Minutes + ':' + Seconds)
     Seconds--;
+    YourTime++;
 }
 
 var temporary = true;
