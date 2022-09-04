@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Overpass+Mono:wght@300&family=Roboto+Slab&family=Roboto:wght@500&family=Varela+Round&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -7,6 +8,7 @@
     font-family: 'Varela Round', sans-serif;
     overflow: hidden;
 }
+
 body {
     position: relative;
     min-height: 100vh;
@@ -18,6 +20,7 @@ body {
     /* background: url(https://media.istockphoto.com/vectors/number-background-vector-id451046873?k=20&m=451046873&s=612x612&w=0&h=8JJkRrFvN1Tu3k913C6I6J3kXglFxTMhu0guknte8gA=); */
     background-size: cover;
 }
+
 .main {
     position: relative;
     width: 100%;
@@ -27,6 +30,7 @@ body {
     align-items: center;
     flex-direction: column;
 }
+
 .title {
     padding: 2vh 5vh;
     font-size: 3vh;
@@ -38,6 +42,7 @@ body {
     margin-bottom: 50vh;
     background: white;
 }
+
 .chooselever {
     position: absolute;
     width: 50vh;
@@ -52,6 +57,7 @@ body {
     gap: 5vh;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
+
 .chooselever button {
     cursor: pointer;
     padding: 1vh 4vh;
@@ -61,10 +67,9 @@ body {
     outline: none;
     appearance: none;
     border-radius: 0.5vh;
+    font-size: 2vh;
 }
-.chooselever button:hover , .chooselever form div select:hover  {
-    background: rgba(255, 255, 255, 0.5);
-}
+
 .chooselever form {
     display: flex;
     justify-content: center;
@@ -72,12 +77,14 @@ body {
     flex-direction: column;
     gap: 1vh;
 }
+
 .chooselever div {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
+
 .chooselever form div select {
     cursor: pointer;
     width: 25vh;
@@ -91,26 +98,32 @@ body {
     border-radius: 1vh;
     font-size: 1.5vh;
 }
+
 .chooselever form div select option {
     color: black;
 }
+
 form p {
     font-weight: 1vh;
 }
+
 @keyframes close {
     0% {
         opacity: 1;
         transform: scale(1);
     }
+
     100% {
         opacity: 0;
         transform: scale(0);
     }
 }
+
 @keyframes closeh1 {
     0% {
         opacity: 1;
     }
+
     100% {
         opacity: 0;
     }
@@ -128,6 +141,7 @@ form p {
     height: 100vh;
     gap: 2vh;
 }
+
 table {
     background: white;
     border-radius: 0.5vh;
@@ -135,6 +149,7 @@ table {
     border-spacing: 5px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
+
 th {
     appearance: none;
     cursor: pointer;
@@ -144,6 +159,7 @@ th {
     height: 2.2em;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
+
 th p {
     font-size: 1em;
 }
@@ -153,30 +169,46 @@ th p {
         opacity: 1;
         transform: scale(1);
     }
+
     100% {
         opacity: 0;
         transform: scale(0);
     }
 }
+
 @keyframes true {
     0% {
         opacity: 1;
         transform: scale(1);
     }
+
     100% {
         opacity: 0;
         transform: scale(0);
     }
 }
+
 @keyframes error {
     0% {
         background: rgba(255, 255, 255, 0.2);
     }
+
     20% {
         background: red;
     }
+
     100% {
         background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+@keyframes show {
+    0% {
+        background: white;
+    }
+
+    100% {
+        background: rgb(255, 234, 0);
     }
 }
 
@@ -192,6 +224,7 @@ th p {
     border-radius: 0.5vh;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
+
 #countdown {
     background: white;
     width: 35vh;
@@ -205,6 +238,7 @@ th p {
     border-radius: 0.5vh;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
+
 #home {
     cursor: pointer;
     position: absolute;
@@ -218,12 +252,14 @@ th p {
     background: white;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
+
 #mode-name {
     position: absolute;
     top: 10%;
     color: white;
     text-align: center;
 }
+
 #your-time {
     position: absolute;
     transform: translateY(-2.5vh);
@@ -261,9 +297,11 @@ th p {
     font-size: 1vh;
     text-align: center;
 }
+
 .grid:hover {
     background: rgba(255, 255, 255, 0.5);
 }
+
 .grid option {
     color: black;
 }
@@ -281,4 +319,11 @@ th p {
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
-/* background */
+@media only screen and (max-height: 600px) {
+    #mode-name {
+        position: absolute;
+        top: 0%;
+        color: white;
+        text-align: center;
+    }
+}

@@ -28,6 +28,7 @@ var close = () => {
     const a = document.querySelectorAll('.chooselever')[0];
     // Lấy tên chế độ
     var ModeName = document.getElementById('getlever');
+
     setTimeout(function () {
         document.getElementById('mode-name').innerHTML = ModeName.options[ModeName.selectedIndex].text + ' ' + (Number(getgird)) + ' x ' + (Number(getgird)) + '</br>' + timevalue + ' minutes';
         a.style.display = 'none';
@@ -114,15 +115,12 @@ var NoTitle1 = () => {
             DivisibleNumber(mode);
 
             wrongsClick = wrongsGrid[getgird - 3];
-            console.log(wrongsClick);
 
             document.getElementById('find').style.fontSize = '1.2vh'
             document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left</br>Wrong clicks: ' + wrongsClick;
             break;
     }
 }
-
-
 var NoTitle2 = () => {
     for (let i in Aarray) {
         for (let j in Aarray) {
@@ -320,6 +318,18 @@ var DivisibleNumber = (x) => {
     }
     DivisibleCount3 = DivisibleCount1;
 }
+var ShowDivisible = () => {
+    for (let i in B) {
+        for (let j in B) {
+            if (B[i][j] == 1) {
+                document.querySelectorAll('tr')[i].querySelectorAll('th')[j].style.animation = 'show 0.5s';
+                setTimeout(() => {
+                    document.querySelectorAll('tr')[i].querySelectorAll('th')[j].style.background = 'rgb(255, 234, 0)';
+                }, 500);
+            }
+        }
+    }
+}
 var Divisible = (x, y) => {
     // Hết giờ
     if (timeUp) return false;
@@ -333,6 +343,7 @@ var Divisible = (x, y) => {
             document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
             document.getElementById('find').style.fontSize = '3vh';
             document.getElementById('find').innerHTML = 'YOU LOST !';
+            ShowDivisible();
             LockNumber();
             stop = true;
             RetryBtn();
@@ -399,6 +410,9 @@ var TimeRemaining = () => {
         return false;
     }
     if ((Minutes < 1) && (Seconds < 1)) {
+        // Dành cho divisible numbers
+        ShowDivisible();
+
         LockNumber();
         timeUp = true;
         document.getElementById('find').style.fontSize = '3vh'; //Dòng này cho chế độ divisible numbers
