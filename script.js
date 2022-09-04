@@ -26,7 +26,7 @@ var Getlever = () => {
     if (level == '5') {
         document.getElementById('gettime').disabled = true;
         document.getElementById('gettime').options[0].selected = true;
-        document.getElementById('gettime').options[0].innerHTML = '30 seconds';
+        document.getElementById('gettime').options[0].innerHTML = '20 seconds';
     } else {
         document.getElementById('gettime').disabled = false;
         document.getElementById('gettime').options[3].selected = true;
@@ -135,7 +135,7 @@ var NoTitle1 = () => {
 
         case '5':
             timevalue = 0;
-            Seconds = 30;
+            Seconds = sc;
             mode = M / M;
             NoTitle2();
             break;
@@ -407,7 +407,7 @@ var Divisible = (x, y) => {
     document.getElementById('find').innerHTML = `Find divisible number for ${mode}</br>${DivisibleCount3} numbers left</br>Wrong clicks: ${wrongsClick}`;
 }
 
-
+var sc = 20;
 var TimeKeeper = (x, y) => {
     // Hết giờ
     if (timeUp) return false;
@@ -426,20 +426,15 @@ var TimeKeeper = (x, y) => {
     // Chọn đúng
     B[x][y] = 2;
     let addedSeconds = 10;
-    Seconds += addedSeconds;
+    sc += addedSeconds;
     document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
     setTimeout(function () {
         document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
     }, 500);
 
     // Thời gian
-    if (addedSeconds > 60 - Seconds) {
-        Seconds = addedSeconds - (Seconds - addedSeconds);
-        Minutes++;
-    } else if (Seconds > 59) {
-        Seconds = 0;
-        Minutes++;
-    }
+    Minutes = Math.floor(sc / 60);
+    Seconds = sc % 60;
 
     // Định nghĩa số tiếp theo
     for (i in Aarray) {
@@ -502,6 +497,10 @@ var TimeRemaining = () => {
         clearInterval(TimeRemaining);
         return false;
     }
+    // Dành cho Timekeeper
+
+
+
     if (Seconds < 0) {
         Seconds = 59;
         Minutes--;
@@ -509,6 +508,9 @@ var TimeRemaining = () => {
     Seconds = Check(Seconds);
     document.getElementById('countdown').innerHTML = `Time remaining</br>${Minutes}:${Seconds}`;
     // console.log(Minutes + ':' + Seconds)
+    // Timekeeper mode
+    sc--;
+
     Seconds--;
     YourTime++;
 }
