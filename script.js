@@ -14,7 +14,7 @@ var Timeline = () => {
             alert('Can not play 8x8 -> 10x10');
         }
         for (let i = 5; i <= 7; i++) {
-            document.querySelector('.grid').options[i].disabled = false;
+            document.querySelector('.grid').options[i].disabled = true;
         }
         return true;
     }
@@ -29,6 +29,10 @@ var Getlever = () => {
         document.getElementById('gettime').disabled = true;
         document.getElementById('gettime').options[0].selected = true;
         document.getElementById('gettime').options[0].innerHTML = '20 seconds';
+
+        for (let i = 5; i <= 7; i++) {
+            document.querySelector('.grid').options[i].disabled = false;
+        }
     } else {
         document.getElementById('gettime').disabled = false;
         document.getElementById('gettime').options[3].selected = true;
