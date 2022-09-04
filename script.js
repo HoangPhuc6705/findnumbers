@@ -20,6 +20,19 @@ var Timeline = () => {
         document.querySelector('.grid').options[i].disabled = false;
     }
 }
+document.getElementById('getlever').onclick = function () { Getlever() };
+var Getlever = () => {
+    var level = document.getElementById('getlever').value;
+    if (level == '5') {
+        document.getElementById('gettime').disabled = true;
+        document.getElementById('gettime').options[0].selected = true;
+        document.getElementById('gettime').options[0].innerHTML = '30 seconds';
+    } else {
+        document.getElementById('gettime').disabled = false;
+        document.getElementById('gettime').options[3].selected = true;
+        document.getElementById('gettime').options[0].innerHTML = '1 minutes';
+    }
+}
 
 // Tắt bảng chọn
 var close = () => {
@@ -117,7 +130,14 @@ var NoTitle1 = () => {
             wrongsClick = wrongsGrid[getgird - 3];
 
             document.getElementById('find').style.fontSize = '1.2vh'
-            document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left</br>Wrong clicks: ' + wrongsClick;
+            document.getElementById('find').innerHTML = `Find divisible number for ${mode}</br>${DivisibleCount3} numbers left</br>Wrong clicks: ${wrongsClick}`;
+            break;
+
+        case '5':
+            timevalue = 0;
+            Seconds = 30;
+            mode = M / M;
+            NoTitle2();
             break;
     }
 }
@@ -130,7 +150,7 @@ var NoTitle2 = () => {
             }
         }
     }
-    document.getElementById('find').innerHTML = 'Find number: ' + mode;
+    document.getElementById('find').innerHTML = `Find number: ${mode}`;
 }
 
 // Chế độ
@@ -150,6 +170,11 @@ var NoTitle3 = (a, x, y) => {
 
         case '4':
             a.onclick = function () { Divisible(x, y) }
+            break;
+        
+        case '5':
+            a.onclick = function () { TimeKeeper(x, y) }
+            break;
     }
 }
 
@@ -171,7 +196,7 @@ var YourTimeBox = (k) => {
 
     const timebox = document.createElement('p');
     timebox.id = 'your-time';
-    timebox.innerHTML = 'Your time: ' + divMn + ':' + modSc;
+    timebox.innerHTML = `Your time: ${divMn}:${modSc}`;
     document.querySelector('.game').appendChild(timebox);
 }
 
@@ -211,7 +236,7 @@ var MinToMax = (x, y) => {
     }
 
     // In ra màn hình
-    document.getElementById('find').innerHTML = 'Find number: ' + (Aarray[x][y] + 1);
+    document.getElementById('find').innerHTML = `Find number: ${Aarray[x][y] + 1}`;
 
     // Win
     Win(M * M, x, y);
@@ -299,7 +324,7 @@ var FindRandom = (x, y) => {
     }
 
     // In ra màn hình
-    document.getElementById('find').innerHTML = 'Find number: ' + Aarray[nextX][nextY];
+    document.getElementById('find').innerHTML = `Find number: ${Aarray[nextX][nextY]}`;
 }
 
 var DivisibleCount1 = 0; //Số phần tử thõa mãn điều kiện
@@ -349,7 +374,7 @@ var Divisible = (x, y) => {
             RetryBtn();
             return false;
         }
-        document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left</br>Wrong clicks: ' + wrongsClick;
+        document.getElementById('find').innerHTML = `Find divisible number for ${mode}</br>${DivisibleCount3} numbers left</br>Wrong clicks: ${wrongsClick}`;
 
         document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
         setTimeout(function () {
@@ -379,8 +404,59 @@ var Divisible = (x, y) => {
     }
 
     //  In ra màn hình
-    document.getElementById('find').innerHTML = 'Find divisible number for ' + (mode) + '</br>' + (DivisibleCount3) + ' numbers left</br>Wrong clicks: ' + wrongsClick;
+    document.getElementById('find').innerHTML = `Find divisible number for ${mode}</br>${DivisibleCount3} numbers left</br>Wrong clicks: ${wrongsClick}`;
 }
+
+
+var TimeKeeper = (x, y) => {
+    // Hết giờ
+    if (timeUp) return false;
+    // Không chọn lại
+    if (B[x][y] == 2) return false;
+
+    // Chọn sai
+    if (B[x][y] == 0) {
+        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
+        setTimeout(function () {
+            document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'none';
+        }, 500)
+        return false;
+    }
+
+    // Chọn đúng
+    B[x][y] = 2;
+    let addedSeconds = 10;
+    Seconds += addedSeconds;
+    document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
+    setTimeout(function () {
+        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
+    }, 500);
+
+    // Thời gian
+    if (addedSeconds > 60 - Seconds) {
+        Seconds = addedSeconds - (Seconds - addedSeconds);
+        Minutes++;
+    } else if (Seconds > 59) {
+        Seconds = 0;
+        Minutes++;
+    }
+
+    // Định nghĩa số tiếp theo
+    for (i in Aarray) {
+        for (j in Aarray) {
+            if (Aarray[i][j] == Aarray[x][y] + 1) {
+                B[i][j] = 1;
+            }
+        }
+    }
+
+    // In ra màn hình
+    document.getElementById('find').innerHTML = `Find number: ${Aarray[x][y] + 1}`;
+
+    // Win
+    Win(M * M, x, y);
+}
+
 
 var LockNumber = () => {
     for (i in B) {
@@ -401,7 +477,7 @@ var GetTimer = () => {
     // Seconds = 3;
 }
 var Check = (i) => {
-    if (i < 10) i = '0' + i;
+    if (i < 10) i = `0${i}`;
     return i;
 }
 var TimeRemaining = () => {
@@ -431,7 +507,7 @@ var TimeRemaining = () => {
         Minutes--;
     }
     Seconds = Check(Seconds);
-    document.getElementById('countdown').innerHTML = 'Time remaining</br>' + Minutes + ':' + Seconds;
+    document.getElementById('countdown').innerHTML = `Time remaining</br>${Minutes}:${Seconds}`;
     // console.log(Minutes + ':' + Seconds)
     Seconds--;
     YourTime++;
