@@ -43,6 +43,11 @@ var Getlever = () => {
 // Tắt bảng chọn
 var close = () => {
     document.querySelectorAll('.chooselever button')[0].disabled = true;
+    // Fix bug này xảy ra trên điện thoại
+    setTimeout(() => {
+        document.querySelectorAll('.chooselever button')[0].disabled = false;
+    }, 500);
+
     start();
     // Chuyển trang
     if ((leverValue == '6') || (leverValue == '7')) {
