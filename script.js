@@ -6,13 +6,15 @@ const title = document.querySelector('.title');
 document.getElementById('gettime').onclick = function () { Timeline() };
 var Timeline = () => {
     let times = document.getElementById('gettime').value;
+
     if (times == '1') {
         let grid = document.querySelector('.grid').value;
         if (Number(grid) >= 8) {
             document.querySelector('.grid').options[2].selected = true;
+            alert('Can not play 8x8 -> 10x10');
         }
         for (let i = 5; i <= 7; i++) {
-            document.querySelector('.grid').options[i].disabled = true;
+            document.querySelector('.grid').options[i].disabled = false;
         }
         return true;
     }
@@ -425,7 +427,7 @@ var TimeKeeper = (x, y) => {
 
     // Chọn đúng
     B[x][y] = 2;
-    let addedSeconds = 10;
+    let addedSeconds = 5;
     sc += addedSeconds;
     document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
     setTimeout(function () {
@@ -434,7 +436,8 @@ var TimeKeeper = (x, y) => {
 
     // Thời gian
     Minutes = Math.floor(sc / 60);
-    Seconds = sc % 60;
+    Seconds = (sc % 60) + 1;
+    TimeRemaining();
 
     // Định nghĩa số tiếp theo
     for (i in Aarray) {
