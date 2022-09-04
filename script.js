@@ -426,7 +426,7 @@ var Divisible = (x, y) => {
 
 var sc = 20;
 var addedSeconds = 0;
-var addedArray = [2, 2, 2, 3, 3, 3, 4, 5];
+var addedArray = [2, 2, 2, 3, 3, 4, 4, 5];
 var TimeKeeper = (x, y) => {
     // Hết giờ
     if (timeUp) return false;
