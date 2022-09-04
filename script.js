@@ -44,6 +44,11 @@ var Getlever = () => {
 var close = () => {
     document.querySelectorAll('.chooselever button')[0].disabled = true;
     start();
+    // Chuyển trang
+    if ((leverValue == '6') || (leverValue == '7')) {
+        window.location.assign('HarderMode/harder.html');
+        return false;
+    }
     const a = document.querySelectorAll('.chooselever')[0];
     // Lấy tên chế độ
     var ModeName = document.getElementById('getlever');
@@ -178,7 +183,7 @@ var NoTitle3 = (a, x, y) => {
         case '4':
             a.onclick = function () { Divisible(x, y) }
             break;
-        
+
         case '5':
             a.onclick = function () { TimeKeeper(x, y) }
             break;
