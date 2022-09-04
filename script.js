@@ -489,7 +489,9 @@ var TimeRemaining = () => {
     }
     if ((Minutes < 1) && (Seconds < 1)) {
         // Dành cho divisible numbers
-        ShowDivisible();
+        if (leverValue == '4') {
+            ShowDivisible();
+        }
 
         LockNumber();
         timeUp = true;
