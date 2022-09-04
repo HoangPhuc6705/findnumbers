@@ -1,2 +1,2 @@
-Update 8.0.3
-Bản cập nhật nhỏ (04/09/2022)
+Update 8.0.4
+Chế độ mới: Time Keeper (Min to Max)
