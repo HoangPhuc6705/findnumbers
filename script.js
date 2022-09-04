@@ -142,6 +142,7 @@ var NoTitle1 = () => {
         case '5':
             timevalue = 0;
             Seconds = sc;
+            addedSeconds = addedArray[getgird - 3];
             mode = M / M;
             NoTitle2();
             break;
@@ -414,6 +415,8 @@ var Divisible = (x, y) => {
 }
 
 var sc = 20;
+var addedSeconds = 0;
+var addedArray = [2, 2, 2, 3, 3, 3, 4, 5];
 var TimeKeeper = (x, y) => {
     // Hết giờ
     if (timeUp) return false;
@@ -431,7 +434,6 @@ var TimeKeeper = (x, y) => {
 
     // Chọn đúng
     B[x][y] = 2;
-    let addedSeconds = 5;
     sc += addedSeconds;
     document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
     setTimeout(function () {
