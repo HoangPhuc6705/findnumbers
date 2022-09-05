@@ -424,6 +424,16 @@ var Divisible = (x, y) => {
     document.getElementById('find').innerHTML = `Find divisible number for ${mode}</br>${DivisibleCount3} numbers left</br>Wrong clicks: ${wrongsClick}`;
 }
 
+
+// Chế độ này chỉ mở lúc 19h -> 00h00 (vì Mode có bug bị khùng)
+var date = new Date();
+var hour = date.getHours();
+if ((hour >= 19) && (hour <= 24)) {
+    document.getElementById('getlever').options[4].disabled = false;
+} else {
+    document.getElementById('getlever').options[4].disabled = true;
+}
+
 var sc = 20;
 var addedSeconds = 0;
 var addedArray = [2, 2, 2, 3, 3, 4, 4, 5];
@@ -454,6 +464,8 @@ var TimeKeeper = (x, y) => {
     Minutes = Math.floor(sc / 60);
     Seconds = (sc % 60) + 1;
     TimeRemaining();
+    // console.log(addedArray[getgird - 3]);;
+    // Seconds += addedArray[getgird - 3];
 
     // Định nghĩa số tiếp theo
     for (i in Aarray) {
