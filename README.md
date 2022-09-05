@@ -12,4 +12,5 @@
 04/09/2022: Update bản 8.0.4</br>
             Chế độ mới: Time keeper</br></br>
 05/09/2022: Cập nhật nhỏ: Chế độ Time Keeper chỉ mở giới hạn từ 19h00 tới 00h00 (vì có bug ở chế độ này)</br>
-            Đã fix bug ở chế độ Time keeper
+            Đã fix bug ở chế độ Time keeper</br></br>
+<h1>Dừng cập game từ 05/09/2022 cho đến khi có thông báo mới nhất</h1>
