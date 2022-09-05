@@ -431,12 +431,13 @@ var hour = date.getHours();
 if ((hour >= 19) && (hour <= 24)) {
     document.getElementById('getlever').options[4].disabled = false;
 } else {
-    document.getElementById('getlever').options[4].disabled = true;
+    document.getElementById('getlever').options[4].disabled = false;
 }
 
 var sc = 20;
 var addedSeconds = 0;
 var addedArray = [2, 2, 2, 3, 3, 4, 4, 5];
+var FixBugOfTimeKeeper = true;
 var TimeKeeper = (x, y) => {
     // Hết giờ
     if (timeUp) return false;
@@ -454,7 +455,15 @@ var TimeKeeper = (x, y) => {
 
     // Chọn đúng
     B[x][y] = 2;
-    sc += addedSeconds;
+
+    // Fix bug thần chưởng
+    if (FixBugOfTimeKeeper) {
+        sc += addedSeconds + 1;
+        FixBugOfTimeKeeper = false;
+    } else {
+        sc += addedSeconds + 1;
+    }
+    
     document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
     setTimeout(function () {
         document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
@@ -462,10 +471,9 @@ var TimeKeeper = (x, y) => {
 
     // Thời gian
     Minutes = Math.floor(sc / 60);
-    Seconds = (sc % 60) + 1;
+    Seconds = sc % 60;
     TimeRemaining();
-    // console.log(addedArray[getgird - 3]);;
-    // Seconds += addedArray[getgird - 3];
+    
 
     // Định nghĩa số tiếp theo
     for (i in Aarray) {
@@ -541,6 +549,7 @@ var TimeRemaining = () => {
     Seconds = Check(Seconds);
     document.getElementById('countdown').innerHTML = `Time remaining</br>${Minutes}:${Seconds}`;
     // console.log(Minutes + ':' + Seconds)
+
     // Timekeeper mode
     sc--;
 
