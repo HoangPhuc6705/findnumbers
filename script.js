@@ -236,7 +236,7 @@ export { GirdValue, TimeValue, WinBox, Defeat }
 //   console.log("Đây là một máy tính.");
 //   AutoFullScreen();
 // }
-
+console.log("Hoang Phuc - sinh vien nam nhat nganh Cong nghe thuc pham truong Dai hoc Nong Lam TPHCM");
 // function AutoFullScreen() {
 //   const fullscreen = document.querySelector("html");
 //   if (fullscreen.requestFullscreen) {
