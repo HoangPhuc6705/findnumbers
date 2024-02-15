@@ -1,69 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Find Numbers</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="startgame.css">
+  <title>Find Numbers</title>
 </head>
-
 <body>
-    <div class="background"></div>
-    <div class="main">
-        <div class="title">
-            <p>Find Numbers</p>
+    <div class="container">
+      <div class="title-box">
+        <p>FIND NUMBERS</p>
+        <p>Nhanh tay - Nhanh mắt - Nhanh thắng</p>
+      </div>
+      <div class="option-box">
+        <div class="options">
+          <p>Chọn chế độ</p>
+          <select id="GameMode">
+            <option value="1" selected>Min to Max</option>
+            <option value="2">Max to Min</option>
+            <option value="3">Random</option>
+            <option value="4">Muliples</option>
+            <option value="5" disabled>Time keeper (tạm đóng)</option>
+            <option value="6">Total</option>
+          </select>
+          <select id="Grid">
+            <option value="3">3 x 3</option>
+            <option value="4">4 x 4</option>
+            <option value="5" selected>5 x 5</option>
+            <option value="6">6 x 6</option>
+            <option value="7">7 x 7</option>
+            <option value="8">8 x 8</option>
+            <option value="9">9 x 9</option>
+            <option value="10">10 x 10</option>
+            <option value="20">20 x 20</option>
+          </select>
+          <select id="Time">
+            <option value="0" selected>Normal</option>
+            <option value="1">1 phút</option>
+            <option value="2">2 phút</option>
+            <option value="5">5 phút</option>
+            <option value="10">10 phút</option>
+            <option value="15">15 phút</option>
+            <option value="30">30 phút</option>
+            <option value="60">60 phút</option>
+          </select>
+          <button id="startgame" type="button">Bắt đầu</button>
+          <button id="twoplayer" type="button">Chế độ 2 người chơi</button>
+          <div class="InfoGame">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 80a176 176 0 10176 176A176 176 0 00256 80z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"/><path d="M200 202.29s.84-17.5 19.57-32.57C230.68 160.77 244 158.18 256 158c10.93-.14 20.69 1.67 26.53 4.45 10 4.76 29.47 16.38 29.47 41.09 0 26-17 37.81-36.37 50.8S251 281.43 251 296" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"/><circle cx="250" cy="348" r="20"/></svg>
+          </div>
         </div>
-        <div class="chooselever">
-            <select class="grid">
-                <option value="3">3 x 3</option>
-                <option value="4">4 x 4</option>
-                <option value="5" selected>5 x 5</option>
-                <option value="6">6 x 6</option>
-                <option value="7">7 x 7</option>
-                <option value="8">8 x 8</option>
-                <option value="9">9 x 9</option>
-                <option value="10">10 x 10</option>
-            </select>
-            <form>
-                <div>
-                    <p>Choose mode</p>
-                    <select id="getlever">
-                        <option value="1">Min to Max</option>
-                        <option value="2">Max to Min</option>
-                        <option value="3">Random numbers</option>
-                        <option value="4">Divisible numbers</option>
-                        <option value="5">Time Keeper</option>
-                    </select>
-                </div>
-                <div>
-                    <p>Timeline</p>
-                    <select id="gettime">
-                        <option value="1">1 minutes</option>
-                        <option value="5">5 minutes</option>
-                        <option value="10">10 minutes</option>
-                        <option value="15" selected>15 minutes</option>
-                        <option value="30">30 minutes</option>
-                        <option value="60">60 minutes</option>
-                    </select>
-                </div>
-            </form>
-            <button>START</button>
-        </div>
+      </div>
     </div>
-
-    <div class="game">
-        <button type="button" id="home" onclick="window.location.assign('index.html')">Home</button>
-        <p id="mode-name"></p>
-        <p id="find"></p>
-        <table></table>
-        <p id="countdown"></p>
-    </div>
-    <p class="copyright">Copyright by Fmack - Hoang Phuc</p>
+    <script type="module" src="script.js"></script>
+    <script type="module" src="time.js"></script>
+    <script type="module" src="./TwoPlayer/TwoPlayerMode.js"></script>
 </body>
-<script src="script.js"></script>
-<script>
-    alert('Hiện nhà phát triển sẽ dừng update từ 05/09/2022')
-</script>
 </html>

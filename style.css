@@ -1,330 +1,123 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron&family=Overpass+Mono:wght@300&family=Roboto+Slab&family=Roboto:wght@500&family=Varela+Round&display=swap');
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: black;
-    font-family: 'Varela Round', sans-serif;
-    overflow: hidden;
-    -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@font-face {
+  font-family: 'SVN-Bango';
+  src: url('./font/SVN-Bango.otf');
+}
+
+@font-face {
+  font-family: 'SVN-Prima';
+  src: url(./font/SVN-Prima.ttf);
 }
 
 body {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background: linear-gradient(-45deg, #56CCF2, #2F80ED);
-    /* background: url(https://media.istockphoto.com/vectors/number-background-vector-id451046873?k=20&m=451046873&s=612x612&w=0&h=8JJkRrFvN1Tu3k913C6I6J3kXglFxTMhu0guknte8gA=); */
-    background-size: cover;
+  position: relative;
+  min-height: 100vh;
 }
 
-.main {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.container {
+  display: flex;
+  min-height: 100vh;
+  justify-content: space-around;
 }
 
-.title {
-    padding: 2vh 5vh;
-    font-size: 3vh;
-    text-align: center;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    border-radius: 1vh;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    margin-bottom: 50vh;
-    background: white;
+.title-box,
+.option-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.chooselever {
-    position: absolute;
-    width: 50vh;
-    height: 30vh;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 1vh;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 5vh;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+.title-box {
+  flex-direction: column;
+  gap: 5px;
 }
 
-.chooselever button {
-    cursor: pointer;
-    padding: 1vh 4vh;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    border: none;
-    background: white;
-    outline: none;
-    appearance: none;
-    border-radius: 0.5vh;
-    font-size: 2vh;
+.title-box p:nth-child(1) {
+  font-family: SVN-Bango;
+  font-size: 300%;
+  text-align: center;
 }
 
-.chooselever form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 1vh;
+.title-box p:nth-child(2) {
+  font-family: SVN-Prima;
+  text-align: center;
 }
 
-.chooselever div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.options {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 80%;
+  height: 80%;
 }
 
-.chooselever form div select {
-    cursor: pointer;
-    width: 25vh;
-    height: 5vh;
-    background: white;
-    border: 0.1vh solid black;
-    /* border: none; */
-    /* appearance: none; */
-    outline: none;
-    text-align: center;
-    border-radius: 1vh;
-    font-size: 1.5vh;
+.options p {
+  font-family: SVN-Prima;
+  font-size: 200%;
+  text-align: center;
 }
 
-.chooselever form div select option {
-    color: black;
+.options select {
+  width: 50%;
+  height: 5%;
 }
 
-form p {
-    font-weight: 1vh;
+.InfoGame {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 5%;
+  height: 5%;
 }
 
-@keyframes close {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0);
-    }
+#startgame {
+  cursor: pointer;
+  font-family: SVN-Prima;
+  width: 20%;
+  height: 10%;
 }
 
-@keyframes closeh1 {
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
+#twoplayer {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }
 
-
-/* table */
-.game {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    gap: 2vh;
+/* thong bao thang tro choi */
+.backgroundf {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-table {
-    background: white;
-    border-radius: 0.5vh;
-    padding: 0.5vh;
-    border-spacing: 5px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+.result-box {
+  width: 50%;
+  height: 70%;
+  border-radius: 50px;
+  background: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-th {
-    appearance: none;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.2);
-    font-weight: normal;
-    width: 2.2em;
-    height: 2.2em;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-}
-
-th p {
-    font-size: 1em;
-}
-
-@keyframes hide {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0);
-    }
-}
-
-@keyframes true {
-    0% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0);
-    }
-}
-
-@keyframes error {
-    0% {
-        background: rgba(255, 255, 255, 0.2);
-    }
-
-    20% {
-        background: red;
-    }
-
-    100% {
-        background: rgba(255, 255, 255, 0.2);
-    }
-}
-
-@keyframes show {
-    0% {
-        background: white;
-    }
-
-    100% {
-        background: rgb(255, 234, 0);
-    }
-}
-
-#find {
-    text-align: center;
-    background: white;
-    font-size: 3vh;
-    width: 27vh;
-    height: 5vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0.5vh;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-}
-
-#countdown {
-    background: white;
-    width: 35vh;
-    height: 10vh;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3vh;
-    padding: 1vh 2vh;
-    border-radius: 0.5vh;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-}
-
-#home {
-    cursor: pointer;
-    position: absolute;
-    top: 1vh;
-    right: 1vh;
-    padding: 1vh 2vh;
-    appearance: none;
-    outline: none;
-    border: none;
-    border-radius: 0.5vh;
-    background: white;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-}
-
-#mode-name {
-    position: absolute;
-    top: 10%;
-    color: white;
-    text-align: center;
-}
-
-#your-time {
-    position: absolute;
-    transform: translateY(-2.5vh);
-    padding: 1vh 2vh;
-    border-radius: 0.5vh;
-    font-weight: 400;
-    background: white;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em, rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.copyright {
-    font-size: 10px;
-    opacity: 0.3;
-    position: absolute;
-    top: 1vh;
-    color: white;
-}
-
-
-.grid {
-    cursor: pointer;
-    position: absolute;
-    left: 0.5vh;
-    top: 0.5vh;
-    background: rgba(255, 255, 255, 0.2);
-    outline: none;
-    text-align: center;
-    border: 0.2vh solid black;
-    border-radius: 0.5vh;
-    width: 8vh;
-    height: 2vh;
-    font-size: 1vh;
-    text-align: center;
-}
-
-.grid:hover {
-    background: rgba(255, 255, 255, 0.5);
-}
-
-.grid option {
-    color: black;
-}
-
-#retry {
-    cursor: pointer;
-    padding: 1vh 5vh;
-    appearance: none;
-    outline: none;
-    border: none;
-    position: absolute;
-    bottom: 10%;
-    border-radius: 1vh;
-    background: white;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-}
-
-@media only screen and (max-height: 600px) {
-    #mode-name {
-        position: absolute;
-        top: 0%;
-        color: white;
-        text-align: center;
-    }
+.title1 {
+  font-family: SVN-Bango;
+  font-size: 300%;
 }

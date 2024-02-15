@@ -1,574 +1,245 @@
-// start
-document.querySelectorAll('.chooselever button')[0].onclick = function () { close() }
-const title = document.querySelector('.title');
+// Thông tin đầu vào
+import * as Min from "./GameMode/mintomax.js";
+import * as Max from "./GameMode/maxtomin.js";
+import * as Rand from "./GameMode/randomize.js";
+import * as mul from "./GameMode/multiples.js";
+import * as totall from "./GameMode/total.js";
+import * as TheTime from "./time.js"
+var NameGameMode = [
+  "Min to Max",
+  "Max to Min",
+  "Randomize",
+  "Divisor",
+  "Time Keeper",
+  "Coples"
+]
+var Modevalue = 1; //Giá trị chế độ mặc định
+var GirdValue = 5; //Lưới mặc định
+var TimeValue = 0; //Thời gian mặc định
 
-// Xử lí thông tin khi đang chọn
-document.getElementById('gettime').onclick = function () { Timeline() };
-var Timeline = () => {
-    let times = document.getElementById('gettime').value;
-
-    if (times == '1') {
-        let grid = document.querySelector('.grid').value;
-        if (Number(grid) >= 8) {
-            document.querySelector('.grid').options[2].selected = true;
-            alert('Can not play 8x8 -> 10x10');
-        }
-        for (let i = 5; i <= 7; i++) {
-            document.querySelector('.grid').options[i].disabled = true;
-        }
-        return true;
-    }
-    for (let i = 5; i <= 7; i++) {
-        document.querySelector('.grid').options[i].disabled = false;
-    }
+// Chọn chế độ
+document.querySelector("#GameMode").onclick = () => {
+  const Choose = document.querySelector("#GameMode");
+  Modevalue = Number(Choose.value);
 }
-document.getElementById('getlever').onclick = function () { Getlever() };
-var Getlever = () => {
-    var level = document.getElementById('getlever').value;
-    if (level == '5') {
-        document.getElementById('gettime').disabled = true;
-        document.getElementById('gettime').options[0].selected = true;
-        document.getElementById('gettime').options[0].innerHTML = '20 seconds';
-
-        for (let i = 5; i <= 7; i++) {
-            document.querySelector('.grid').options[i].disabled = false;
-        }
-    } else {
-        document.getElementById('gettime').disabled = false;
-        document.getElementById('gettime').options[3].selected = true;
-        document.getElementById('gettime').options[0].innerHTML = '1 minutes';
-    }
+document.querySelector("#Grid").onclick = () => {
+  const Choose = document.querySelector("#Grid");
+  GirdValue = Choose.value;
+}
+document.querySelector("#Time").onclick = () => {
+  const Choose = document.querySelector("#Time");
+  TimeValue = Choose.value;
 }
 
-// Tắt bảng chọn
-var close = () => {
-    document.querySelectorAll('.chooselever button')[0].disabled = true;
-    // Fix bug này xảy ra trên điện thoại
-    setTimeout(() => {
-        document.querySelectorAll('.chooselever button')[0].disabled = false;
-    }, 500);
+// Khởi động game
+function StartGame() {
+  // Xoá sảnh chọn
+  document.querySelector(".title-box").remove();
+  document.querySelector(".option-box").remove();
 
-    start();
-    // Chuyển trang
-    if ((leverValue == '6') || (leverValue == '7')) {
-        window.location.assign('HarderMode/harder.html');
-        return false;
-    }
-    const a = document.querySelectorAll('.chooselever')[0];
-    // Lấy tên chế độ
-    var ModeName = document.getElementById('getlever');
+  // Tạo giao diện gameplay
+  paramaterBox();
+  GameplayBox();
 
-    setTimeout(function () {
-        document.getElementById('mode-name').innerHTML = ModeName.options[ModeName.selectedIndex].text + ' ' + (Number(getgird)) + ' x ' + (Number(getgird)) + '</br>' + timevalue + ' minutes';
-        a.style.display = 'none';
-        title.style.display = 'none';
-        document.querySelectorAll('.game')[0].style.display = 'flex';
-        createTable(getgird);
-        GetTimer();
-        TimeRemaining();
-        setInterval(TimeRemaining, 1000);
-    }, 0)
-}
-var lever = document.getElementById('getlever'),
-    timer = document.getElementById('gettime'),
-    gird = document.querySelector('.grid'),
-    leverValue,
-    timevalue,
-    getgird;
+  // Paramater
 
-// Lấy thông tin chế độ, thời gian, lưới
-var start = () => {
-    leverValue = lever.value;
-    timevalue = timer.value;
-    getgird = Number(gird.value);
-}
+  // Tạo dữ liệu
+  switch (Modevalue) {
+    case 1:
+      Min.CreateDataNumber();
+      break;
+    case 2:
+      Max.CreateDataNumber();
+      break
+    case 3:
+      Rand.CreateDataNumber();
+      break;
+    case 4:
+      mul.CreateDataNumber();
+      break;
+    case 6:
+      totall.CreateDataNumber();
+      break;
+  }
 
-// game
-var A = [], B = [];
-var Aarray = [];
-var M;
-var createTable = (m) => {
-    M = m;
-    for (let i = 0; i < m * m; i++) {
-        A[i] = i + 1;
-    }
-    A = A.sort(() => Math.random() - 0.5);
-    for (let i = 0; i < m; i++) {
-        Aarray[i] = [];
-        B[i] = [];
-        for (let j = 0; j < m; j++) {
-            B[i][j] = 0;
-            Aarray[i][j] = A[j + (i * m)];
-        }
-    }
+  // Thiet lap giao dien theo khung hinh
+  formatUI();
+  
 
-    for (let i = 0; i < m; i++) {
-        const table = document.querySelectorAll('table')[0];
-        let row = document.createElement('tr');
-        table.appendChild(row);
-        for (let j = 0; j < m; j++) {
-            let text = document.createElement('p');
-            let cols = document.createElement('th');
-            cols.innerHTML = Aarray[i][j];
-            NoTitle3(cols, i, j);
-            cols.appendChild(text);
-            row.appendChild(cols);
-        }
-    }
-    NoTitle1();
-    GetTimer();
-}
-
-var mode;
-// Lấy con số đầu
-var NoTitle1 = () => {
-    switch (leverValue) {
-        case '1':
-            mode = M / M;
-            NoTitle2();
-            break;
-
-        case '2':
-            mode = M * M;
-            NoTitle2();
-            break;
-
-        case '3':
-            A = A.sort(() => Math.random() - 0.5);
-            mode = A[0];
-            NoTitle2();
-            break;
-
-        case '4':
-            mode = Math.floor(Math.random() * 8) + 2;
-            DivisibleNumber(mode);
-
-            wrongsClick = wrongsGrid[getgird - 3];
-
-            document.getElementById('find').style.fontSize = '1.2vh'
-            document.getElementById('find').innerHTML = `Find divisible number for ${mode}</br>${DivisibleCount3} numbers left</br>Wrong clicks: ${wrongsClick}`;
-            break;
-
-        case '5':
-            timevalue = 0;
-            Seconds = sc;
-            addedSeconds = addedArray[getgird - 3];
-            mode = M / M;
-            NoTitle2();
-            break;
-    }
-}
-var NoTitle2 = () => {
-    for (let i in Aarray) {
-        for (let j in Aarray) {
-            if (Aarray[i][j] == mode) {
-                B[i][j] = 1;
-                break;
-            }
-        }
-    }
-    document.getElementById('find').innerHTML = `Find number: ${mode}`;
-}
-
-// Chế độ
-var NoTitle3 = (a, x, y) => {
-    switch (leverValue) {
-        case '1':
-            a.onclick = function () { MinToMax(x, y) }
-            break;
-
-        case '2':
-            a.onclick = function () { MaxToMin(x, y) }
-            break;
-
-        case '3':
-            a.onclick = function () { FindRandom(x, y) }
-            break;
-
-        case '4':
-            a.onclick = function () { Divisible(x, y) }
-            break;
-
-        case '5':
-            a.onclick = function () { TimeKeeper(x, y) }
-            break;
-    }
-}
-
-// Chiến thắng
-var Win = (end, x, y) => {
-    if (Aarray[x][y] == end) {
-        YourTimeBox(YourTime);
-        document.getElementById('find').innerHTML = 'YOU WIN !';
-        stop = true;
-        RetryBtn();
-    }
-}
-
-// Your time box
-var YourTimeBox = (k) => {
-    let divMn = Math.floor(k / 60);
-    let modSc = k % 60;
-    modSc = Check(modSc);
-
-    const timebox = document.createElement('p');
-    timebox.id = 'your-time';
-    timebox.innerHTML = `Your time: ${divMn}:${modSc}`;
-    document.querySelector('.game').appendChild(timebox);
+  // Set thoi gian
+  switch (TimeValue) {
+    case 0:
+      TheTime.NormalTimer();
+      break;
+    default:
+      TheTime.StartingCountdown();
+      break;
+  }
 }
 
 
-// B[x][y] == 1 là chọn đc
-// B[x][y] == 0 là không thể chọn
-// B[x][y] == 2 là đã chọn
-var MinToMax = (x, y) => {
-    // Hết giờ
-    if (timeUp) return false;
-    // Không chọn lại
-    if (B[x][y] == 2) return false;
+// Tạo hộp thông số
+function paramaterBox() {
+  const paramater = document.createElement("div");
+  paramater.classList.add("title-box");
 
-    // Chọn sai
-    if (B[x][y] == 0) {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
-        setTimeout(function () {
-            document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'none';
-        }, 500)
-        return false;
-    }
+  // Các thông số
+  const classname = [
+    "request",
+    "times",
+    "paramater"
+  ]
+  for (let i = 0; i < 3; i++) {
+    const para = document.createElement("div");
+    para.className = classname[i];
+    paramater.appendChild(para);
+  }
 
-    // Chọn đúng
-    B[x][y] = 2;
-    document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
-    setTimeout(function () {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
-    }, 500);
-
-    // Định nghĩa số tiếp theo
-    for (i in Aarray) {
-        for (j in Aarray) {
-            if (Aarray[i][j] == Aarray[x][y] + 1) {
-                B[i][j] = 1;
-            }
-        }
-    }
-
-    // In ra màn hình
-    document.getElementById('find').innerHTML = `Find number: ${Aarray[x][y] + 1}`;
-
-    // Win
-    Win(M * M, x, y);
+  document.querySelector(".container").appendChild(paramater);
 }
+//Tạo hộp gameplay
+function GameplayBox() {
+  const gameplay = document.createElement("div");
+  gameplay.classList.add("option-box");
 
-var MaxToMin = (x, y) => {
-    // Hết giờ
-    if (timeUp) return false;
-    // Không chọn lại
-    if (B[x][y] == 2) return false;
+  const outline = document.createElement("div");
+  outline.classList.add("outline-box");
 
-    // Chọn sai
-    if (B[x][y] == 0) {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
-        setTimeout(function () {
-            document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'none';
-        }, 500)
-        return false;
+  const inline = document.createElement("div");
+  inline.classList.add("matrix");
+
+  for (let i = 0; i < GirdValue; i++) {
+    const rows = document.createElement("ul");
+    rows.classList.add("rowbox")
+    for (let j = 0; j < GirdValue; j++) {
+      const columns = document.createElement("li");
+      columns.classList.add("box", "number");
+      rows.appendChild(columns);
     }
+    inline.appendChild(rows);
+  }
+  outline.appendChild(inline);
 
-    // Chọn đúng
-    B[x][y] = 2;
-    document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
-    setTimeout(function () {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
-    }, 500);
-
-    // Lượt tiếp theo
-    for (i in Aarray) {
-        for (j in Aarray) {
-            if (Aarray[i][j] == Aarray[x][y] - 1) {
-                B[i][j] = 1;
-            }
-        }
-    }
-
-    // In ra màn hình
-    document.getElementById('find').innerHTML = 'Find number: ' + (Aarray[x][y] - 1);
-
-    // Win
-    Win(M / M, x, y);
-}
-
-var inc = 0;
-var FindRandom = (x, y) => {
-    // Hết giờ
-    if (timeUp) return false;
-    // Không chọn lại
-    if (B[x][y] == 2) return false;
-
-    // Chọn sai
-    if (B[x][y] == 0) {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
-        setTimeout(function () {
-            document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'none';
-        }, 500)
-        return false;
-    }
-
-    // Chọn đúng
-    B[x][y] = 2;
-    document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
-    setTimeout(function () {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
-    }, 500);
-
-    // Lượt tiếp theo
-    let nextX, nextY;
-    inc++;
-    for (i in B) {
-        nextY = Aarray[i].indexOf(A[inc]);
-        if (nextY > -1) {
-            nextX = i;
-            B[nextX][nextY] = true;
-            break;
-        }
-    }
-
-    if (inc > M * M - 1) {
-        YourTimeBox(YourTime);
-        RetryBtn();
-        document.getElementById('find').innerHTML = 'YOU WIN !';
-        stop = true;
-        return false;
-    }
-
-    // In ra màn hình
-    document.getElementById('find').innerHTML = `Find number: ${Aarray[nextX][nextY]}`;
-}
-
-var DivisibleCount1 = 0; //Số phần tử thõa mãn điều kiện
-var DivisibleCount2 = 0; //Đếm phần tử
-var DivisibleCount3 = 0; //Bản sao DivisibleCount1
-var wrongsClick = 0;
-var wrongsGrid = [1, 2, 2, 2, 3, 3, 4, 5];
-var DivisibleNumber = (x) => {
-    for (i in Aarray) {
-        for (j in Aarray) {
-            if (Aarray[i][j] % x == 0) {
-                B[i][j] = 1;
-                DivisibleCount1++;
-            }
-        }
-    }
-    DivisibleCount3 = DivisibleCount1;
-}
-var ShowDivisible = () => {
-    for (let i in B) {
-        for (let j in B) {
-            if (B[i][j] == 1) {
-                document.querySelectorAll('tr')[i].querySelectorAll('th')[j].style.animation = 'show 0.5s';
-                setTimeout(() => {
-                    document.querySelectorAll('tr')[i].querySelectorAll('th')[j].style.background = 'rgb(255, 234, 0)';
-                }, 500);
-            }
-        }
-    }
-}
-var Divisible = (x, y) => {
-    // Hết giờ
-    if (timeUp) return false;
-    // Không chọn lại
-    if (B[x][y] == 2) return false;
-
-    // Chọn sai
-    if (B[x][y] == 0) {
-        wrongsClick--;
-        if (wrongsClick == 0) {
-            document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
-            document.getElementById('find').style.fontSize = '3vh';
-            document.getElementById('find').innerHTML = 'YOU LOST !';
-            ShowDivisible();
-            LockNumber();
-            stop = true;
-            RetryBtn();
-            return false;
-        }
-        document.getElementById('find').innerHTML = `Find divisible number for ${mode}</br>${DivisibleCount3} numbers left</br>Wrong clicks: ${wrongsClick}`;
-
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
-        setTimeout(function () {
-            document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'none';
-        }, 500)
-        return false;
-    }
-
-    // Chọn đúng
-    B[x][y] = 2;
-    document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
-    setTimeout(function () {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
-    }, 500);
-    DivisibleCount2++;
-    DivisibleCount3--;
-
-    // Kiểm tra số lượng phần tử
-    if (DivisibleCount2 == DivisibleCount1) {
-        LockNumber();
-        document.getElementById('find').style.fontSize = '3vh';
-        document.getElementById('find').innerHTML = 'YOU WIN !';
-        YourTimeBox(YourTime);
-        stop = true;
-        RetryBtn();
-        return false;
-    }
-
-    //  In ra màn hình
-    document.getElementById('find').innerHTML = `Find divisible number for ${mode}</br>${DivisibleCount3} numbers left</br>Wrong clicks: ${wrongsClick}`;
+  gameplay.appendChild(outline);
+  document.querySelector(".container").appendChild(gameplay);
 }
 
 
-// Chế độ này chỉ mở lúc 19h -> 00h00 (vì Mode có bug bị khùng)
-var date = new Date();
-var hour = date.getHours();
-if ((hour >= 19) && (hour <= 24)) {
-    document.getElementById('getlever').options[4].disabled = false;
-} else {
-    document.getElementById('getlever').options[4].disabled = false;
+// Thêm sự kiện
+document.querySelector("#startgame").onclick = () => {
+  StartGame();
 }
 
-var sc = 20;
-var addedSeconds = 0;
-var addedArray = [2, 2, 2, 3, 3, 4, 4, 5];
-var FixBugOfTimeKeeper = true;
-var TimeKeeper = (x, y) => {
-    // Hết giờ
-    if (timeUp) return false;
-    // Không chọn lại
-    if (B[x][y] == 2) return false;
+// Hộp thoại khi thắng game
+function WinBox() {
+  const backgroundf = document.createElement("div");
+  const box = document.createElement("div");
+  const title = document.createElement("p");
+  const title2 = document.createElement("p");
+  const reload = document.createElement("button");
 
-    // Chọn sai
-    if (B[x][y] == 0) {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'error 0.5s';
-        setTimeout(function () {
-            document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'none';
-        }, 500)
-        return false;
-    }
+  reload.onclick = () => {
+    rel();
+  }
 
-    // Chọn đúng
-    B[x][y] = 2;
+  backgroundf.classList.add("backgroundf");
+  box.classList.add("result-box");
+  title.textContent = `Chiến thắng`;
+  title.classList.add("title1");
+  reload.textContent = "Quay lại sảnh"
 
-    // Fix bug thần chưởng
-    if (FixBugOfTimeKeeper) {
-        sc += addedSeconds + 1;
-        FixBugOfTimeKeeper = false;
-    } else {
-        sc += addedSeconds + 1;
-    }
-    
-    document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.animation = 'true 0.5s';
-    setTimeout(function () {
-        document.querySelectorAll('tr')[x].querySelectorAll('th')[y].style.visibility = 'hidden';
-    }, 500);
-
-    // Thời gian
-    Minutes = Math.floor(sc / 60);
-    Seconds = sc % 60;
-    TimeRemaining();
-    
-
-    // Định nghĩa số tiếp theo
-    for (i in Aarray) {
-        for (j in Aarray) {
-            if (Aarray[i][j] == Aarray[x][y] + 1) {
-                B[i][j] = 1;
-            }
-        }
-    }
-
-    // In ra màn hình
-    document.getElementById('find').innerHTML = `Find number: ${Aarray[x][y] + 1}`;
-
-    // Win
-    Win(M * M, x, y);
+  backgroundf.appendChild(box);
+  box.appendChild(title);
+  box.appendChild(title2);
+  box.appendChild(reload);
+  document.body.appendChild(backgroundf);
 }
 
+function rel() {
+  location.reload();
+}
 
-var LockNumber = () => {
-    for (i in B) {
-        for (j in B) {
-            B[i][j] = 2;
-        }
+// Hộp thoại khi thua cay đỏ dái
+function Defeat() {
+  const backgroundf = document.createElement("div");
+  const box = document.createElement("div");
+  const title = document.createElement("p");
+  const title2 = document.createElement("p");
+  const reload = document.createElement("button");
+
+  reload.onclick = () => {
+    rel();
+  }
+
+  backgroundf.classList.add("backgroundf");
+  box.classList.add("result-box");
+  title.textContent = `Thua cuộc`;
+  title.classList.add("title1");
+  reload.textContent = "Quay lại sảnh"
+
+  backgroundf.appendChild(box);
+  box.appendChild(title);
+  box.appendChild(title2);
+  box.appendChild(reload);
+  document.body.appendChild(backgroundf);
+}
+
+function formatUI() {
+  if (GirdValue == 3) {
+    fontsize(400);
+  }
+  if (GirdValue == 4) {
+    fontsize(300);
+  }
+  if (GirdValue == 5) {
+    fontsize(300);
+  }
+  if (GirdValue == 6) {
+    fontsize(200);
+  }
+  if (GirdValue == 7) {
+    fontsize(250);
+  }
+  if (GirdValue == 8) {
+    fontsize(200);
+  }
+  if (GirdValue == 9) {
+    fontsize(180);
+  }
+  if (GirdValue == 10) {
+    fontsize(140);
+  }
+  if (GirdValue == 20) {
+    fontsize(70);
+  }
+}
+
+function fontsize(f) {
+  for (let i = 0; i < GirdValue; i++) {
+    for (let j = 0; j < GirdValue; j++) {
+      document.querySelectorAll("ul")[i].querySelectorAll("li")[j].style.fontSize = `${f}%`;
     }
+  }
 }
 
-
-var Minutes, Seconds = 0;
-var timeUp = false;
-var stop = false;
-var YourTime = -1;
-var GetTimer = () => {
-    Minutes = Number(timevalue);
-    // Minutes = 0;
-    // Seconds = 3;
-}
-var Check = (i) => {
-    if (i < 10) i = `0${i}`;
-    return i;
-}
-var TimeRemaining = () => {
-    if (stop) {
-        clearInterval(TimeRemaining);
-        return false;
-    }
-    if ((Minutes < 1) && (Seconds < 1)) {
-        // Dành cho divisible numbers
-        if (leverValue == '4') {
-            ShowDivisible();
-        }
-
-        LockNumber();
-        timeUp = true;
-        document.getElementById('find').style.fontSize = '3vh'; //Dòng này cho chế độ divisible numbers
-        document.getElementById('find').innerHTML = 'YOU LOST !';
-
-        // Chỗ này đéo hiểu sao hàm Retrybtn bị lặp mặc dù clearInterval
-        // Dùng true false tạm thời chặn lại
-        RetryBtn();
-
-        document.getElementById('countdown').innerHTML = `TIME'S UP !`;
-        clearInterval(TimeRemaining);
-        return false;
-    }
-    // Dành cho Timekeeper
+export { GirdValue, TimeValue, WinBox, Defeat }
 
 
+// che do toan man hinh tren dien thoai
+// function isMobileDevice() {
+//   return /Mobi|Android/i.test(navigator.userAgent);
+// }
 
-    if (Seconds < 0) {
-        Seconds = 59;
-        Minutes--;
-    }
-    Seconds = Check(Seconds);
-    document.getElementById('countdown').innerHTML = `Time remaining</br>${Minutes}:${Seconds}`;
-    // console.log(Minutes + ':' + Seconds)
+// if (isMobileDevice()) {
+//   console.log("Đây là một thiết bị di động.");
+// } else {
+//   console.log("Đây là một máy tính.");
+//   AutoFullScreen();
+// }
 
-    // Timekeeper mode
-    sc--;
-
-    Seconds--;
-    YourTime++;
-}
-
-var temporary = true;
-var RetryBtn = () => {
-    if (temporary) {
-        let btn = document.createElement('button');
-        btn.innerHTML = 'Retry';
-        btn.id = 'retry';
-        btn.onclick = function () { Reset() };
-        document.querySelector('.game').appendChild(btn);
-        document.getElementById('home').remove();
-        temporary = false;
-    }
-}
-var Reset = () => {
-    location.reload();
-}
+// function AutoFullScreen() {
+//   const fullscreen = document.querySelector("html");
+//   if (fullscreen.requestFullscreen) {
+//     fullscreen.requestFullscreen();
+//   }
+// }
